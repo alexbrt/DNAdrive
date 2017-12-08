@@ -8,7 +8,7 @@ using namespace std;
 
 int main()
 {
-	ifstream infile("test1.txt", ios::binary);
+	ifstream infile("test2.txt", ios::binary);
 	vector<unsigned char> content((istreambuf_iterator<char>(infile)),
 									istreambuf_iterator<char>());
 

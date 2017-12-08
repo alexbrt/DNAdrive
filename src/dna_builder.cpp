@@ -167,7 +167,7 @@ void DNABuilder::add_header(string & sequence)
 	// Get binary digits of sequence index
 	vector<uchar> binary_seq_index;
 	get_uint_binary(curr_sequence_index, binary_seq_index);
-	// Remove redundance (only keep <sequence_index_length> bits)
+	// Remove redundancy (only keep <sequence_index_length> bits)
 	binary_seq_index.erase(binary_seq_index.begin(), binary_seq_index.begin() + binary_seq_index.size() - options->get_sequence_index_length());
 	uint seq_index_zeroes = 0, seq_index_ones = 0;
 	// Count binary 0s and 1s
@@ -194,13 +194,13 @@ void DNABuilder::add_header(string & sequence)
 	{
 		if ((buff_number_of_ones + seq_index_ones) % 2 == 0)
 		{
-			parity_bit = one_digit_to_nucleotide[curr_one_index % 2];
-			curr_one_index++;
+			parity_bit = zero_digit_to_nucleotide[curr_zero_index % 2];
+			curr_zero_index++;
 		}
 		else
 		{
-			parity_bit = zero_digit_to_nucleotide[curr_zero_index % 2];
-			curr_zero_index++;
+			parity_bit = one_digit_to_nucleotide[curr_one_index % 2];
+			curr_one_index++;
 		}
 	}
 	header += parity_bit;
