@@ -22,7 +22,7 @@ SequenceOptions::SequenceOptions(uint packet_index_length, uint content_length, 
 	pam_invariant(pam_invariant),
 	trailing_invariant(trailing_invariant) {}
 
-SequenceOptions::uint SequenceOptions::get_packet_length() const
+SequenceOptions::uint SequenceOptions::get_sequence_length() const
 {
 	return pam_invariant.size() + (packet_index_length + 1) + content_length + (trailing_invariant.size() + 1);
 }

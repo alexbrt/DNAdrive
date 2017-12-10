@@ -14,7 +14,7 @@ class SequenceOptions
 public:
 	SequenceOptions();
 	SequenceOptions(uint packet_index_length, uint content_length, std::string pam_invariant, std::string trailing_invariant);
-	uint get_packet_length() const;
+	uint get_sequence_length() const;
 	uint get_header_length() const;
 	void set_sequence_index_length(uint len);
 	uint get_sequence_index_length() const;
