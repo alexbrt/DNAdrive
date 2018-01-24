@@ -33,51 +33,29 @@ int main()
 	DNABuilder builder;
 	DNADecoder decoder;
 
-	//// Test 1
-	//ifstream infile1("test1.txt", ios::binary);
-	//vector<unsigned char> content1((istreambuf_iterator<char>(infile1)),
-	//								istreambuf_iterator<char>());
-	//builder.set_input(&content1);
-	//builder.set_options(&options);
-	//vector<string> protospacers1 = builder.construct_sequences();
-	//cout << "Protospacer Set 1:" << endl;
-	//for (string & p : protospacers1)
-	//{
-	//	cout << p << endl;
-	//}
-	//decoder.set_input(&protospacers1);
-	//decoder.set_options(&options);
-	//vector<unsigned char> decoded_1 = decoder.decode_sequences();
-	//cout << "Decoded Set 1:" << endl;
-	//for (char c : decoded_1)
-	//{
-	//	cout << c;
-	//}
-	//cout << endl << endl;
+	// "hello."
+	ifstream hello_file("hello.txt", ios::binary);
+	vector<unsigned char> hello_stream((istreambuf_iterator<char>(hello_file)),
+		istreambuf_iterator<char>());
+	builder.set_input(&hello_stream);
+	builder.set_options(&options);
+	vector<string> protospacers_hello = builder.construct_sequences();
+	cout << "Protospacer Set Hello:" << endl;
+	for (string & p : protospacers_hello)
+	{
+		cout << p << endl;
+	}
+	decoder.set_input(&protospacers_hello);
+	decoder.set_options(&options);
+	vector<unsigned char> decoded_hello = decoder.decode_sequences();
+	cout << "Decoded Set Hello:" << endl;
+	for (char c : decoded_hello)
+	{
+		cout << c;
+	}
+	cout << endl << endl;
 
-	//// Test 2
-	//ifstream infile2("test2.txt", ios::binary);
-	//vector<unsigned char> content2((istreambuf_iterator<char>(infile2)),
-	//	istreambuf_iterator<char>());
-	//builder.set_input(&content2);
-	//builder.set_options(&options);
-	//vector<string> protospacers2 = builder.construct_sequences();
-	//cout << "Protospacer Set 2:" << endl;
-	//for (string & p : protospacers2)
-	//{
-	//	cout << p << endl;
-	//}
-	//decoder.set_input(&protospacers2);
-	//decoder.set_options(&options);
-	//vector<unsigned char> decoded_2 = decoder.decode_sequences();
-	//cout << "Decoded Set 2:" << endl;
-	//for (char c : decoded_2)
-	//{
-	//	cout << c;
-	//}
-	//cout << endl << endl;
-
-	unsigned int iterations = 100000;
+	/*unsigned int iterations = 1000000;
 	unsigned int i = 0;
 	while (i < iterations)
 	{
@@ -97,6 +75,6 @@ int main()
 
 		assert(decoded == random);
 		i++;
-	}
+	}*/
 	return 0;
 }

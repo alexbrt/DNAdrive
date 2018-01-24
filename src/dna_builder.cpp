@@ -1,4 +1,7 @@
 #include "dna_builder.h"
+#include "tools.h"
+
+#include<assert.h>
 
 using namespace std;
 
@@ -228,11 +231,30 @@ void DNABuilder::construct_sequence(vector<uchar> input, uint sequence_index, st
 	if (input.size() < options->get_content_length())
 	{
 		/**
-		* Re-add the last nucleotide as a repeat for padding detection.
-		* Note: This algorithm is designed not to permit any mononucleotide repeats.
+		* Re-add the second to last nucleotide as a repeat for padding detection.
+		* Note: This algorithm is designed to alternate nucleotides, so e.g. "GTG" is not permitted.
 		* Using this method, there's no need to specify input length within the sequence.
 		*/
-		uchar repeat = sequence[sequence.size() - 1];
+		uchar repeat = 'X';
+		if (zero_index == 0 || one_index == 0)
+		{
+			repeat = sequence[sequence.size() - 1];
+		}
+		else if (sequence[sequence.size() - 1] == get_nucleotide_complement(sequence[sequence.size() - 2]))
+		{
+			if (nucleotide_to_digit[sequence[sequence.size() - 1]] == 0)
+			{
+				repeat = one_digit_to_nucleotide[(one_index - 1) % 2];
+			}
+			else
+			{
+				repeat = zero_digit_to_nucleotide[(zero_index - 1) % 2];
+			}
+		}
+		else
+		{
+			repeat = sequence[sequence.size() - 2];
+		}
 		sequence += repeat;
 		uint padding_index = 0;
 		for (uint i = input.size() + 1; i < options->get_content_length(); i++)
@@ -254,7 +276,7 @@ void DNABuilder::construct_sequence(vector<uchar> input, uint sequence_index, st
 	/**
 	* In case the last nucleotide of the content is the same as the bit marker,
 	* in order to avoid 5'-3' internal PAM, A gets swapped with T and G gets swapped with C.
-	* Note: Canonical PAM is guaranteed to contain mononucleotide repeats.
+	* Note: Canonical PAM usually contains mononucleotide repeats.
 	*/
 	if (sequence[sequence.size() - 1] == marker_bit)
 	{
@@ -271,6 +293,23 @@ void DNABuilder::construct_sequence(vector<uchar> input, uint sequence_index, st
 
 	// 7. Add trailing invariant
 	sequence += options->get_trailing_invariant();
+
+	// PAM count (debug)
+	uint pam_count = 0;
+	size_t pos = sequence.find(pam, 0);
+	while (pos != string::npos)
+	{
+		pam_count++;
+		pos = sequence.find(pam, pos + 1);
+	}
+	string r_c_pam = get_reverse_complement(pam);
+	pos = sequence.find(r_c_pam, 0);
+	while (pos != string::npos)
+	{
+		pam_count++;
+		pos = sequence.find(r_c_pam, pos + 1);
+	}
+	assert(pam_count == 1);
 }
 
 void DNABuilder::get_uchar_binary(const uchar c, vector<uchar> & binary)

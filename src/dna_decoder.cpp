@@ -1,4 +1,5 @@
 #include "dna_decoder.h"
+#include "tools.h"
 
 using namespace std;
 using namespace boost;
@@ -84,20 +85,25 @@ void DNADecoder::decode_sequence(string sequence, uint sequence_number, uint & s
 	// Step 1 - Check for data corruption
 	uchar parity_bit = sequence[0];
 	uint GC_count = 0;
-	uchar prev_c = 'X';
+	uchar prev_at_bp = 'X';
+	uchar prev_gc_bp = 'X';
 	uint padding_begin = options->get_content_length(); // Index of padding start | Default = no padding
 	for (uint i = 1; i < sequence.size(); i++)
 	{
-		if (sequence[i] == prev_c) // If nucleotide repetition is detected within content, break and set padding_begin
+		if (sequence[i] == prev_at_bp || sequence[i] == prev_gc_bp) // If nucleotide alternation rule is broken, set padding begin index
 		{
 			padding_begin = i;
 			break;
 		}
 		if (sequence[i] == 'G' || sequence[i] == 'C')
 		{
+			prev_gc_bp = sequence[i];
 			GC_count++;
 		}
-		prev_c = sequence[i];
+		else
+		{
+			prev_at_bp = sequence[i];
+		}
 	}
 	if ((GC_count % 2) != nucleotide_to_digit[parity_bit])
 	{
