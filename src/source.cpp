@@ -1,15 +1,20 @@
-#include<iostream>
-#include<vector>
-#include<fstream>
-#include<iterator>
-#include<random> // Testing
-#include<algorithm> // Testing
-#include<assert.h> // Testing
-#include"dna_builder.h"
-#include"dna_decoder.h"
+#ifdef DEBUG
+#include <random> // Testing
+#include <algorithm> // Testing
+#include <assert.h> // Testing
+#endif // DEBUG
+
+#include <iostream>
+#include <vector>
+#include <fstream>
+#include <iterator>
+#include "dna_builder.h"
+#include "dna_decoder.h"
+#include "tools.h"
 
 using namespace std;
 
+#ifdef DEBUG
 void randomize(vector<unsigned char> & in, unsigned int min_length, int max_length)
 {
 	random_device rd_1;
@@ -25,6 +30,7 @@ void randomize(vector<unsigned char> & in, unsigned int min_length, int max_leng
 		in.push_back(rand_value);
 	}
 }
+#endif // DEBUG
 
 int main()
 {
@@ -55,7 +61,8 @@ int main()
 	}
 	cout << endl << endl;
 
-	/*unsigned int iterations = 1000000;
+#ifdef DEBUG
+	unsigned int iterations = 1000000;
 	unsigned int i = 0;
 	while (i < iterations)
 	{
@@ -75,6 +82,10 @@ int main()
 
 		assert(decoded == random);
 		i++;
-	}*/
+	}
+	cout << protospacer_to_minimal_hairpin("AAGTCGCGCATGACGCGTACGTCAGTACTAGCAGA", 7, 5) << endl;
+	cout << protospacer_to_minimal_hairpin("AAGCTATGACGTCGATACGTCGCGATCAGCGTGGA", 7, 5) << endl;
+#endif // DEBUG
+
 	return 0;
 }

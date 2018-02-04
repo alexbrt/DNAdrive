@@ -1,10 +1,10 @@
 #pragma once
 
-#include<string>
-#include<utility>
-#include<map>
-#include<vector>
-#include"sequence_options.h"
+#include <string>
+#include <utility>
+#include <map>
+#include <vector>
+#include "sequence_options.h"
 
 class DNABuilder
 {

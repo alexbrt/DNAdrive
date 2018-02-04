@@ -4,10 +4,10 @@
 #include<deque>
 #include<string>
 #include<map>
-#include<cmath>
-#include<iostream>
-#include<boost/dynamic_bitset.hpp>
-#include"sequence_options.h"
+#include <cmath>
+#include <iostream>
+#include <boost/dynamic_bitset.hpp>
+#include "sequence_options.h"
 
 class DNADecoder
 {

@@ -1,7 +1,9 @@
+#ifdef DEBUG
+#include <assert.h>
+#endif // DEBUG
+
 #include "dna_builder.h"
 #include "tools.h"
-
-#include<assert.h>
 
 using namespace std;
 
@@ -294,6 +296,7 @@ void DNABuilder::construct_sequence(vector<uchar> input, uint sequence_index, st
 	// 7. Add trailing invariant
 	sequence += options->get_trailing_invariant();
 
+#ifdef DEBUG
 	// PAM count (debug)
 	uint pam_count = 0;
 	size_t pos = sequence.find(pam, 0);
@@ -310,6 +313,7 @@ void DNABuilder::construct_sequence(vector<uchar> input, uint sequence_index, st
 		pos = sequence.find(r_c_pam, pos + 1);
 	}
 	assert(pam_count == 1);
+#endif // DEBUG
 }
 
 void DNABuilder::get_uchar_binary(const uchar c, vector<uchar> & binary)
