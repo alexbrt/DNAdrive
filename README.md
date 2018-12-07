@@ -12,7 +12,7 @@ _Making data storage in bacteria possible._ 🌟
 
 ## Documentation
 
-_The full formal specification of the encoding scheme is coming soon._
+_The full formal specification of the encoding scheme is coming soon. Official paper can be found in /docs._
 
 ## Authors
 
